@@ -86,4 +86,17 @@ class LinksController extends Controller
 
         return redirect('/editar/'. $id)->with('success', 'Link atualizado com sucesso!');
     }
+
+    public function excluir($id)
+    {
+        $link = Link::find($id);
+
+        if (!$link) {
+            return redirect('/')->with('error', 'Link não encontrado.');
+        }
+
+        $link->delete();
+
+        return redirect('/')->with('success', 'Link excluído com sucesso.');
+    }
 }

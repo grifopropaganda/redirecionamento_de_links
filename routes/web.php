@@ -24,6 +24,7 @@ Route::post('/criar', [LinksController::class, 'criar'])->name('criar');
 
 Route::get('/editar/{id}', [LinksController::class, 'editarView'])->name('editarView');
 Route::post('/editar', [LinksController::class, 'editar'])->name('editar');
+Route::delete('/excluir/{id}', [LinksController::class, 'excluir'])->name('excluir');
 
 Route::fallback(function () {
     return redirect('https://inteligenciaedu.com.br');
