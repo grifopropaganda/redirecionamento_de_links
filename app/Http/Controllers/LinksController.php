@@ -15,12 +15,11 @@ class LinksController extends Controller
     
     public function index()
     {
-        return view('home');
-    }
+        $links = Link::latest()->get();
 
-    public function viewCriar()
-    {
-        return view('criar');
+        return view('home', [
+            'links' => $links
+        ]);
     }
 
     public function criar(Request $request)
@@ -35,7 +34,7 @@ class LinksController extends Controller
         $existingLink = Link::where('slug', $slug)->first();
 
         if ($existingLink) {
-            return redirect('/criar')->with('error', 'Slug já existe. Por favor, escolha outro.');
+            return redirect('/')->with('error', 'Slug já existe. Por favor, escolha outro.');
         }
 
         $link = new Link();
@@ -43,6 +42,48 @@ class LinksController extends Controller
         $link->slug = $slug;
         $link->save();
 
-        return redirect('/criar')->with('success', 'Link criado com sucesso!');
+        return redirect('/')->with('success', 'Link criado com sucesso! Copie-o: ' . ENV('APP_URL') . '/link/' . $slug);
+    }
+
+    public function editarView($id)
+    {
+        $link = Link::find($id);
+        return view('editar', [
+            'link' => $link
+        ]);
+    }
+
+    public function editar(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'url' => 'required|url',
+            'slug' => 'string'
+        ]);
+
+        $id = $request->id;
+        $url = $request->url;
+        $link = Link::find($id);
+        $slug = Str::slug($request->slug);
+
+        if($url != $link->url) {
+            $link->update([
+                'url' => $request->url
+            ]);
+        }
+
+        if($slug != $link->slug) {
+            $existingLink = Link::where('slug', $slug)->first();
+
+            if ($existingLink) {
+                return back()->with('error', 'Slug já existe. Por favor, escolha outro.');
+            } else {
+                $link->update([
+                    'slug' => $slug
+                ]);
+            }
+        }
+
+        return redirect('/editar/'. $id)->with('success', 'Link atualizado com sucesso!');
     }
 }

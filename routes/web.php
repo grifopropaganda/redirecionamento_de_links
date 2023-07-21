@@ -20,7 +20,11 @@ Auth::routes();
 Route::get('/link/{slug}', [RedirectController::class, 'redirect']);
 
 Route::get('/', [LinksController::class, 'index'])->name('home');
-Route::get('/criar', [LinksController::class, 'viewCriar'])->name('criarView');
 Route::post('/criar', [LinksController::class, 'criar'])->name('criar');
 
+Route::get('/editar/{id}', [LinksController::class, 'editarView'])->name('editarView');
+Route::post('/editar', [LinksController::class, 'editar'])->name('editar');
 
+Route::fallback(function () {
+    return redirect('https://inteligenciaedu.com.br');
+});
