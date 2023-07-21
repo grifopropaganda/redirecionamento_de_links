@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/link/{slug}', [RedirectController::class, 'redirect']);
 
 Route::get('/', [LinksController::class, 'index'])->name('home');
-Route::get('/criar', [LinksController::class, 'viewCriar'])->name('criar');
+Route::get('/criar', [LinksController::class, 'viewCriar'])->name('criarView');
 Route::post('/criar', [LinksController::class, 'criar'])->name('criar');
 
 

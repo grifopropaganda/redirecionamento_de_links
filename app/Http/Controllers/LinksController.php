@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Link;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LinksController extends Controller
 {
@@ -29,9 +30,17 @@ class LinksController extends Controller
             'slug' => 'nullable|string|unique:links'
         ]);
 
+        $slug = Str::slug($request->slug);
+
+        $existingLink = Link::where('slug', $slug)->first();
+
+        if ($existingLink) {
+            return redirect('/criar')->with('error', 'Slug já existe. Por favor, escolha outro.');
+        }
+
         $link = new Link();
         $link->url = $request->input('url');
-        $link->slug = $request->input('slug');
+        $link->slug = $slug;
         $link->save();
 
         return redirect('/criar')->with('success', 'Link criado com sucesso!');
