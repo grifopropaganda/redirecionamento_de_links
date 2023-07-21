@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LinksController;
+use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/{slug}', [RedirectController::class, 'redirect']);
+Route::get('/link/{slug}', [RedirectController::class, 'redirect']);
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/criar', [RedirectController::class, 'viewCriar'])->name('criar');
-Route::post('/criar', [RedirectController::class, 'criar'])->name('criar');
+Route::get('/', [LinksController::class, 'index'])->name('home');
+Route::get('/criar', [LinksController::class, 'viewCriar'])->name('criar');
+Route::post('/criar', [LinksController::class, 'criar'])->name('criar');
 
 
