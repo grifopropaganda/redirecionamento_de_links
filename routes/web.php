@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LinksController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +23,8 @@ Route::get('/link/{slug}', [RedirectController::class, 'redirect']);
 
 Route::get('/', [LinksController::class, 'index'])->name('home');
 Route::post('/criar', [LinksController::class, 'criar'])->name('criar');
+Route::get('/criar-usuario', [UsuarioController::class, 'criarView'])->name('usuario.view');
+Route::post('/criar-usuario', [RegisterController::class, 'create'])->name('usuario.criar');
 
 Route::get('/editar/{id}', [LinksController::class, 'editarView'])->name('editarView');
 Route::post('/editar', [LinksController::class, 'editar'])->name('editar');
