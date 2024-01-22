@@ -53,7 +53,7 @@
                                 @foreach ($links as $item)  
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
-                                        <td>https://url.inteligenciaedu.com.br/link/{{ $item->slug }}</td>
+                                        <td>{{ENV('APP_URL')}}/{{ $item->slug }}</td>
                                         <td>{{ $item->url }}</td>
                                         <td>
                                             <a class="btn btn-primary" href="{{ route('editarView', $item->id) }}">
